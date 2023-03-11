@@ -1,5 +1,6 @@
 //Implimantation fo Circular Linked list
 #include<iostream>
+#include<map>
 using namespace std;
 
 class Node{
@@ -126,6 +127,59 @@ bool isCircularList(Node* head){
 
     return false;
     
+}
+
+bool detectLoop(Node* head){
+
+    if(head == NULL){
+        return false;
+    }
+
+    map<Node*, bool> visited;
+
+    Node* temp =head;
+
+    while(temp != NULL){
+
+        //cycle is present
+        if(visited[temp] == true){
+            cout << "Cycle is present at : " << temp->data << endl;
+            return true;
+        }
+
+        visited[temp] = true;
+        temp = temp->next;
+    }
+    return true;
+
+}
+
+Node* floydDetectLoop(Node* head){
+
+    if(head == NULL){
+        return NULL;
+    }
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while(slow != NULL && fast != NULL){
+
+        fast = fast->next;
+        if(fast != NULL){
+            fast = fast->next;
+        }
+
+        slow = slow->next;
+
+        if(slow == fast){
+            return slow;
+        }
+
+    }
+
+    return NULL;
+
 }
 
 int main(){
